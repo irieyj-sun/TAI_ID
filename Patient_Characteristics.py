@@ -49,7 +49,13 @@ def data_pichart(data, mytitle):
     plt.show() 
     if mytitle == 'Re-transplant?': 
         mytitle = 'Re-transplant'
-    #plt.savefig(mytitle +'.png')
+    elif mytitle == 'Does the patient have chronic kidney disease (defined as eGFR < 30)':
+        mytitle = 'Does the patient have chronic kidney disease'
+    elif mytitle == 'Did the patient receive a different vaccine for the second dose?':
+        mytitle ='Did the patient receive a different vaccine for the second dose'
+    elif mytitle == 'Was pre-vaccine (serum) sample obtained?':
+        mytitle ='Was pre-vaccine (serum) sample obtained'       
+    plt.savefig(mytitle +'.png')
     print(percentage)
     return 0
 
@@ -242,6 +248,17 @@ df, count = days_between_dates(df, header_date1, header_date2, day_column_name)
 day_min, day_max, day_mean, day_var, day_filled = data_stat(df['Characteristics','Tran_to_first_dose_days'], 90,'SOT day to first dose (90 days)')
 
 axis_legends, months_year = days_to_month_year(df['Characteristics','Tran_to_first_dose_days'], 'SOD to first_dose(day)')
+
+#Distribution of pre vaccine blood sample to First Covid dose
+day_column_name = ['Characteristics','pre_sample_to_first_dose_days']
+df[day_column_name[0],day_column_name[1]] = None
+
+header_date1 = ['Characteristics','Pre-vaccine blood sample date ']
+header_date2 = ['Characteristics','Date of COVID-19 Vaccine Dose 1 date']
+df, count = days_between_dates(df, header_date1, header_date2, day_column_name)
+
+day_min, day_max, day_mean, day_var, day_filled = data_stat(df['Characteristics','pre_sample_to_first_dose_days'], 1,'Pre-vaccine to first dose (days)')
+
 
 #Distribution of Days from first dose to Vx or Vy sample collection
 day_column_name = ['Characteristics','first_to_Vx_days']
